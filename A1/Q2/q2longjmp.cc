@@ -9,8 +9,8 @@ struct T {
 };
 #endif
 
+jmp_buf env;
 struct E {};
-//jmp_buf env;
 unsigned int hc, gc, fc, kc;
 
 void f( volatile int i ) {                // volatile, prevent dead-code optimizations
@@ -18,8 +18,7 @@ void f( volatile int i ) {                // volatile, prevent dead-code optimiz
     T t;
     cout << "f enter" << endl;
 #endif
-  //if ( i == 3 ) longjmp(env, 1);
-  if ( i == 3 ) throw E(); //should be a longjmp?
+  if ( i == 3 ) longjmp(env, 1);
     if ( i != 0 ) f( i - 1 );
 #ifndef OUTPUT
     cout << "f exit" << endl;
@@ -38,24 +37,27 @@ void g( volatile int i ) {
     kc += 1;
 }
 void h( volatile int i ) {
+    if(setjmp(env) != 0) {
+#ifndef OUTPUT
+        cout << "handler 1" << endl;
+#endif
+        if (setjmp(env) != 0) {
+            cout << "handler 2" << endl;
+            if ( i != 0 ) h ( i - 1 );
+#ifndef OUTPUT
+            cout << "h exit" << endl;
+#endif
+            kc += 1;
+            return;
+        }
+        g( gc );
+    }
+
 #ifndef OUTPUT
     cout << "h enter" << endl;
 #endif
     if ( i % 3 == 0 ) {
-        try {
-            f( fc );
-        } catch( E ) {
-#ifndef OUTPUT
-            cout << "handler 1" << endl;
-#endif
-            try {
-                g( gc );
-            } catch( E ) {
-#ifndef OUTPUT
-                cout << "handler 2" << endl;
-#endif
-            }
-        }
+        f( fc );
     }
     if ( i != 0 ) h( i - 1 );
 #ifndef OUTPUT
