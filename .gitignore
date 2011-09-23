@@ -1,0 +1,40 @@
+    # if files are already added and commit apply this ignore list with:
+    # git clean -Xf
+     
+    # OS generated files
+    .DS_Store?
+    ehthumbs.db
+    Icon?
+    Thumbs.db
+     
+    # maven target-files (compiled runtimes, javadocs and test-results)
+    target/
+     
+    # Compiled source
+    *.com
+    *.class
+    *.dll
+    *.exe
+    *.o
+    *.so
+     
+    #Android-Files
+    *.dex
+    *.ap_
+     
+    #Lyx-Temporaries
+    *.lyx~
+     
+    #Octave-Files
+    *.m~
+    *.m~~
+    octave-core
+     
+    #Latex-Temporaries
+    *.blg
+    *.synctex.gz
+    *.out #seems to risky because of c-programs
+     
+    #may an xcode developer check http://blog.illuminex.com/2009/10/better-sample-gitignore-file-for-xcode.html
+    ~
+    ~
