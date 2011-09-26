@@ -12,8 +12,6 @@ Extra::Extra( Filter *f ) {
 }
 
 void Extra::main() {
-  cout << "I'm EXTRA" << endl;
-
   char ch1;
 
   f->put(' ');

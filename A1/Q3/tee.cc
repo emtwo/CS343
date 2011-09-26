@@ -7,8 +7,6 @@ Tee::Tee( Filter *f, int base_width ) {
 }
 
 void Tee::main() {
-  cout << "I'm TEE" << endl;
-
   if (basewidth % 2 == 0) {
     basewidth++;
   }

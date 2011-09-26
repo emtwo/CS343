@@ -4,8 +4,6 @@ Caps::Caps( Filter *f ) {
   this->f = f;
 }  
 void Caps::main() {
-  cout << "I'm CAPS" << endl;
-
   for (;;) {
     // Skip past whitespace if there is any.
     for ( ; ch == ' ' || ch == '\t' || ch == '\n' ; ) {

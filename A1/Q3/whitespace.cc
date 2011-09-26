@@ -5,7 +5,6 @@ Whitespace::Whitespace( Filter *f ) {
 }
   
 void Whitespace::main() {
-  cout << "I'm WHITESPACE" << endl;
   char ch1;
 
   ch1 = ch;

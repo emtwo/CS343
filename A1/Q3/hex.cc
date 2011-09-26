@@ -12,7 +12,6 @@ string Hex::makehex(char character) {
 }
 
 void Hex::main() {
-  cout << "I'm HEX" << endl;
   int g, b;
   for (;;) {
     for (g = 0; g < 8; g++) {
