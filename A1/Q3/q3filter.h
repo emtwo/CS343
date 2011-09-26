@@ -16,7 +16,6 @@ class FilterObj {
 };
 
 _Coroutine Filter {
-  //vector<string> parameters;
   protected:
     static const unsigned char End_Filter = '\377';
     unsigned char ch;
@@ -29,86 +28,80 @@ _Coroutine Filter {
 
 _Coroutine Reader : public Filter {
   Filter* f;
-  void main() { 
-    cout << "I'm READER" << endl;
-    f->put(ch);
+  istream *i;
+  void main() {
+    try {
+      for (;;) {
+        ch = i->get();
+        f->put(ch);
+      }
+    } catch (ios_base::failure) {
+      f->put(End_Filter);
+    }
   };
   public:
     Reader( Filter *f, istream *i ) {
+      i->exceptions(ios_base::eofbit);
       this->f = f;
+      this->i = i;
+      resume();
     };
 };
 
 _Coroutine Writer : public Filter {
-  Filter* f;
+  ostream *o;
   void main() {
-    cout << "I'm WRITER" << endl;
-    f->put(ch);
+    for (;;) {
+      if (ch == End_Filter) break;
+      *o << ch;
+      suspend();
+    }
+    
   };
   public:
     Writer( ostream *o ) {
-      this->f = f;
+      this->o = o;
     };
 };
 
 _Coroutine Hex : public Filter {
   Filter* f;
-  void main() {
-    cout << "I'm HEX" << endl;
-    f->put(ch);
-  };
+  void main();
+  string makehex(char character);
   public:
-    Hex( Filter *f ) {
-      this->f = f;
-    };
+    Hex( Filter *f );
 };
 
 _Coroutine Caps : public Filter {
   Filter* f;
-  void main() {
-    cout << "I'm CAPS" << endl;
-    f->put(ch);
-  };
+  void main();
   public:
-    Caps( Filter *f ) {
-      this->f = f;
-    };
+    Caps( Filter *f );
 };
 
 _Coroutine Whitespace : public Filter {
   Filter* f;
-  void main() {
-    cout << "I'm WHITESPACE" << endl;
-    f->put(ch);
-  };
+  void main();
   public:
-    Whitespace( Filter *f ) {
-      this->f = f;
-    };
+    Whitespace( Filter *f );
 };
 
 _Coroutine Tee : public Filter {
   Filter* f;
-  void main() {
-    cout << "I'm TEE" << endl;
-    f->put(ch);
-  };
+  int basewidth;
+  void main();
   public:
-    Tee( Filter *f, int base_width ) {
-      this->f = f;
-    };
+    Tee( Filter *f, int base_width );
 };
 
 _Coroutine Extra : public Filter {
   Filter* f;
-  void main() {
-    cout << "I'm EXTRA" << endl;
-    f->put(ch);
-  };
+
+  static const string morse[36];
+
+  void main();
   public:
-    Extra( Filter *f ) {
-      this->f = f;
-    };
+    Extra( Filter *f );
 };
 
 #endif

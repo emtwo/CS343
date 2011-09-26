@@ -8,7 +8,8 @@ EXEC0 = throwcatch				# 0th executable name
 OBJECTS1 = q2longjmp.o                          #object files forming 1st executable with prefix "q2"
 EXEC1 = longjmp					# 1st executable name
 
-OBJECTS2 = q3filter.o                           # object files forming 2nd executable with prefix "q3"
+OBJECTS2 = q3filter.o hex.o tee.o whitespace.o caps.o extra.o
+
 EXEC2 = filter					# 2nd executable name
 
 OBJECTS = ${OBJECTS0} ${OBJECTS1} ${OBJECTS2}	# all object files
