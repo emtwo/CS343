@@ -1,0 +1,48 @@
+2.b.i)
+
+The following is output from running the time command with the same parameters on both longjmp and throwcatch
+programs with compiler optimization OFF:
+
+~/CS343/A1/Q2$ time ./longjmp 1000 1000 100000
+
+real	0m1.692s
+user	0m1.584s
+sys	0m0.104s
+
+~/CS343/A1/Q2$ time ./throwcatch 1000 1000 100000
+
+real	3m25.183s
+user	3m23.025s
+sys	0m1.468s
+
+The following is output from running the time command with the same parameters on both longjmp and throwcatch
+programs with compiler optimization ON:
+
+marina@marina-laptop:~/CS343/A1/Q2$ time ./longjmp 1000 1000 100000
+
+real	0m1.686s
+user	0m1.536s
+sys	0m0.148s
+marina@marina-laptop:~/CS343/A1/Q2$ time ./throwcatch 1000 1000 100000
+
+real	3m13.910s
+user	3m8.952s
+sys	0m4.640s
+
+2.b.ii)
+
+It appears that in both cases (optimized and unoptimized), the performance of the longjmp program is 
+significantly better than that of the throwcatch program. The performance of the longjmp program in
+terms of user time is 3.35 times faster than throwcatch for the unoptimized case and 3.12 times
+faster than throwcatch for the optimized case.
+
+2.b.iii)
+
+The reason for the major performance difference is the fact that throw/try/catch processing often involves
+significant overhead. One possiblity is that the compiler stores a look-up table for exception handlers
+and throwing an object is costly since each throw will involve searching through each table up the call stack
+for a matching exception handler. Another possibility is that for each entry into a try/catch block, a new
+stack frame is created for this block so that a thrown exception can simply pop the stack to get to the 
+corresponding exception handler. However, creating a new frame for each try/catch block results in costly
+overhead. All of this overhead is removed by using longjmp since the programmer statically decides where
+to go in the case of an exception. There is no hidden processing done by the  compiler necessary
