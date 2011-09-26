@@ -1,8 +1,11 @@
 #include "q3filter.h"
 
 void uMain::main() {
-  
+ 
+  // Associates filters with their parameters.
   vector<FilterObj*> filterObjs;
+
+  // A list of all filters.
   vector<Filter*> filters;
 
   istream *infile = &cin;
@@ -36,6 +39,7 @@ void uMain::main() {
     }
   }
  
+  // Initialize filters and store in vector.
   Filter *f = new Writer(outfile);
   filters.push_back(f);
 
